@@ -30,7 +30,7 @@ local count = 0
 
 while true do
     count = count + 1
-    local eventData = {event.pull(0.1)}
+    local eventData = {event.pull(0.5)}
     if (eventData[1] == "touch" or eventData[1] == "drag") and eventData[2] == term.screen() then
         edit = true
         count = 1
@@ -53,7 +53,7 @@ while true do
         count = 1
     end
 
-    if not edit and count % 15 == 0 then
+    if not edit and count % 3 == 0 then
         local level2 = {}
         for cx = 1, rx do
             level2[cx] = {}
