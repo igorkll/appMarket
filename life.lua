@@ -1,5 +1,6 @@
 local term = require("term")
 local event = require("event")
+local precess = require("precess")
 
 -------------------------------
 
@@ -26,34 +27,9 @@ local function getState(states, x, y)
 end
 
 local edit = false
-local count = 0
 
-while true do
-    count = count + 1
-    local eventData = {event.pull(0.5)}
-    if (eventData[1] == "touch" or eventData[1] == "drag") and eventData[2] == term.screen() then
-        edit = true
-        count = 1
-        local posX = eventData[3]
-        local posY = eventData[4]
-        local button = eventData[5]
-
-        local newstate
-        if button == 0 then
-            newstate = true
-        elseif button == 1 then
-            newstate = false
-        end
-
-        level[posX][posY] = newstate
-        gpu.setBackground((level[posX][posY] and 0xFFFFFF) or 0)
-        gpu.set(posX, posY, " ")
-    elseif eventData[1] == "drop" and eventData[2] == term.screen() then
-        edit = false
-        count = 1
-    end
-
-    if not edit and count % 3 == 0 then
+local timer = event.timer(0.5, function()
+    if not edit then
         local level2 = {}
         for cx = 1, rx do
             level2[cx] = {}
@@ -94,5 +70,31 @@ while true do
                 end
             end
         end
+    end
+end, math.huge)
+
+precess.info().data.signal = function() event.cancel(timer) os.exit() end
+
+while true do
+    local eventData = {event.pull(0.5)}
+    if (eventData[1] == "touch" or eventData[1] == "drag") and eventData[2] == term.screen() then
+        edit = true
+        count = 1
+        local posX = eventData[3]
+        local posY = eventData[4]
+        local button = eventData[5]
+
+        local newstate
+        if button == 0 then
+            newstate = true
+        elseif button == 1 then
+            newstate = false
+        end
+
+        level[posX][posY] = newstate
+        gpu.setBackground((level[posX][posY] and 0xFFFFFF) or 0)
+        gpu.set(posX, posY, " ")
+    elseif eventData[1] == "drop" and eventData[2] == term.screen() then
+        edit = false
     end
 end
