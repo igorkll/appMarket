@@ -1,6 +1,6 @@
 local term = require("term")
 local event = require("event")
-local precess = require("precess")
+local process = require("process")
 
 -------------------------------
 
@@ -73,7 +73,7 @@ local timer = event.timer(0.5, function()
     end
 end, math.huge)
 
-precess.info().data.signal = function() event.cancel(timer) os.exit() end
+process.info().data.signal = function() event.cancel(timer) os.exit() end
 
 while true do
     local eventData = {event.pull(0.5)}
