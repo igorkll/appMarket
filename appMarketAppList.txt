@@ -1,2 +1,2 @@
 https://pastebin.com/raw/SXVe5pX9;сапер.lua
-https://github.com/igorkll/appMarket/main/life.lua;life.lua
+https://raw.githubusercontent.com/igorkll/appMarket/main/life.lua;life.lua
