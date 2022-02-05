@@ -27,10 +27,10 @@ local function getState(states, x, y)
 end
 
 local edit = false
-local block = false
+local block = 0
 
 local timer = event.timer(1, function()
-    if not edit and not block then
+    if not edit and block == 0 then
         local level2 = {}
         for cx = 1, rx do
             level2[cx] = {}
@@ -72,7 +72,7 @@ local timer = event.timer(1, function()
             end
         end
     end
-    block = false
+    if block > 0 then block = block - 1 end
 end, math.huge)
 
 process.info().data.signal = function() event.cancel(timer) os.exit() end
@@ -81,7 +81,7 @@ while true do
     local eventData = {event.pull(0.5)}
     if (eventData[1] == "touch" or eventData[1] == "drag") and eventData[2] == term.screen() then
         edit = true
-        block = true
+        block = 8
         count = 1
         local posX = eventData[3]
         local posY = eventData[4]
