@@ -1,3 +1,4 @@
 https://pastebin.com/raw/SXVe5pX9;сапер.lua
 https://raw.githubusercontent.com/igorkll/appMarket/main/life.lua;life.lua
 https://raw.githubusercontent.com/igorkll/appMarket/main/nano.lua;nano.lua
+https://raw.githubusercontent.com/igorkll/appMarket/main/nchat.lua;nchat.lua
